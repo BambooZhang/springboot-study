@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xm.shiro.admin.dao.UUserDao">
+
+<!-- UUser resultMap映射  -->
+<resultMap type="com.xm.shiro.admin.entity.UUser" id="UUser">
+        <id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="nickname" property="nickname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="email" property="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="pswd" property="pswd" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <id column="last_login_time" property="lastLoginTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <id column="status" property="status" javaType="java.lang.Long" jdbcType="BIGINT"/>
+</resultMap>
+
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+ id,nickname,email,pswd,create_time,last_login_time,status
+</sql>
+
+<!-- 查询条件 -->
+<sql id="AllColumnWhere">
+	<if test="id!=null  ">
+	AND id=#{id}
+	</if>
+	<if test="nickname!=null  ">
+	AND nickname=#{nickname}
+	</if>
+	<if test="email!=null  ">
+	AND email=#{email}
+	</if>
+	<if test="pswd!=null  ">
+	AND pswd=#{pswd}
+	</if>
+	<if test="createTime!=null  ">
+	AND create_time=#{createTime}
+	</if>
+	<if test="lastLoginTime!=null  ">
+	AND last_login_time=#{lastLoginTime}
+	</if>
+	<if test="status!=null  ">
+	AND status=#{status}
+	</if>
+</sql>
+
+<!-- query 查询条件 -->
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.nickname!=null  and q.nickname !='' ">
+			AND nickname=#{q.nickname}
+		</if>
+		<if test="q.email!=null  and q.email !='' ">
+			AND email=#{q.email}
+		</if>
+		<if test="q.pswd!=null  and q.pswd !='' ">
+			AND pswd=#{q.pswd}
+		</if>
+		<if test="q.createTime!=null ">
+			AND create_time=#{q.createTime}
+		</if>
+		<if test="q.lastLoginTime!=null ">
+			AND last_login_time=#{q.lastLoginTime}
+		</if>
+		<if test="q.status!=null ">
+			AND status=#{q.status}
+		</if>
+	</if>
+</sql>
+
+
+<!-- 添加数据,默认列名第一个为主键 useGeneratedKeys="true" keyProperty="activityId"-->
+<insert id="add" parameterType="UUser"  useGeneratedKeys="true" keyProperty="id">
+	insert into u_user (
+		<if test="id!=null ">
+		id,
+		</if>
+		<if test="nickname!=null  and nickname !='' ">
+		nickname,
+		</if>
+		<if test="email!=null  and email !='' ">
+		email,
+		</if>
+		<if test="pswd!=null  and pswd !='' ">
+		pswd,
+		</if>
+		<if test="createTime!=null ">
+		create_time,
+		</if>
+		<if test="lastLoginTime!=null ">
+		last_login_time,
+		</if>
+		<if test="status!=null ">
+		status
+		</if>
+	) values (
+		<if test="id!=null ">
+		#{id,jdbcType = BIGINT },
+		</if>
+		<if test="nickname!=null  and nickname !='' ">
+		#{nickname,jdbcType = VARCHAR },
+		</if>
+		<if test="email!=null  and email !='' ">
+		#{email,jdbcType = VARCHAR },
+		</if>
+		<if test="pswd!=null  and pswd !='' ">
+		#{pswd,jdbcType = VARCHAR },
+		</if>
+		<if test="createTime!=null ">
+		#{createTime,jdbcType = TIMESTAMP },
+		</if>
+		<if test="lastLoginTime!=null ">
+		#{lastLoginTime,jdbcType = TIMESTAMP },
+		</if>
+		<if test="status!=null ">
+		#{status,jdbcType = BIGINT }
+		</if>
+	)
+</insert>
+
+
+<!--更新数据-->
+<update id="update" parameterType="UUser">
+	update u_user 
+	<set>
+		
+		<if test="nickname!=null  and nickname !='' ">
+			nickname=#{nickname,jdbcType = VARCHAR },
+		</if>
+		
+		<if test="email!=null  and email !='' ">
+			email=#{email,jdbcType = VARCHAR },
+		</if>
+		
+		<if test="pswd!=null  and pswd !='' ">
+			pswd=#{pswd,jdbcType = VARCHAR },
+		</if>
+		
+		<if test="createTime!=null ">
+			create_time=#{createTime,jdbcType = TIMESTAMP },
+		</if>
+		
+		<if test="lastLoginTime!=null ">
+			last_login_time=#{lastLoginTime,jdbcType = TIMESTAMP },
+		</if>
+		
+		<if test="status!=null ">
+			status=#{status,jdbcType = BIGINT },
+		</if>
+		
+	</set>
+	<where>
+			id=#{id}
+	</where>
+</update>
+
+<!--根据主键获取数据-->
+<select id="get" resultMap="UUser">
+	select <include refid="AllColumnlist"/> from u_user
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+
+<!--根据多个ID获取数据-->
+<select id="getByIds" resultMap="UUser">
+	select <include refid="AllColumnlist"/> from u_user
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+
+<!-- 删除记录 -->
+<delete id="delete">
+	delete from u_user
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+
+
+<!-- 列表总数-->
+<select id="count" parameterType="Query"  resultType="Long">
+	select count(id) from u_user
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+</select>
+
+<!-- 分页列表-->
+<select id="pageList" parameterType="Query" resultMap="UUser">
+	select <include refid="AllColumnlist"/> from  u_user
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+	<![CDATA[LIMIT #{rowIndex} , #{pageSize} ]]>
+</select>
+
+
+<!-- 直接使用表名查询HashMap列表 -->
+<select id="queryColumnList" parameterType="Query" resultType="java.util.HashMap">
+	select
+	<include refid="AllColumnlist" />
+	from u_user
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+
+</select>
+
+
+<!--根据主键获取数据-->
+<select id="findByName" resultMap="UUser">
+	select <include refid="AllColumnlist"/> from u_user
+	<where>
+		nickname=#{0}
+	</where>
+</select>
+
+</mapper>

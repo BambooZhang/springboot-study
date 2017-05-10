@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xm.shiro.admin.dao.URolePermissionDao">
+
+<!-- URolePermission resultMap映射  -->
+<resultMap type="com.xm.shiro.admin.entity.URolePermission" id="URolePermission">
+        <id column="rid" property="rid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="pid" property="pid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+</resultMap>
+
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+ rid,pid
+</sql>
+
+<!-- 查询条件 -->
+<sql id="AllColumnWhere">
+	<if test="rid!=null  ">
+	AND rid=#{rid}
+	</if>
+	<if test="pid!=null  ">
+	AND pid=#{pid}
+	</if>
+</sql>
+
+<!-- query 查询条件 -->
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.rid!=null ">
+			AND rid=#{q.rid}
+		</if>
+		<if test="q.pid!=null ">
+			AND pid=#{q.pid}
+		</if>
+	</if>
+</sql>
+
+
+<!-- 添加数据,默认列名第一个为主键 useGeneratedKeys="true" keyProperty="activityId"-->
+<insert id="add" parameterType="URolePermission"  useGeneratedKeys="true" keyProperty="rid">
+	insert into u_role_permission (
+		<if test="rid!=null ">
+		rid,
+		</if>
+		<if test="pid!=null ">
+		pid
+		</if>
+	) values (
+		<if test="rid!=null ">
+		#{rid,jdbcType = BIGINT },
+		</if>
+		<if test="pid!=null ">
+		#{pid,jdbcType = BIGINT }
+		</if>
+	)
+</insert>
+
+
+<!--更新数据-->
+<update id="update" parameterType="URolePermission">
+	update u_role_permission 
+	<set>
+		
+		<if test="pid!=null ">
+			pid=#{pid,jdbcType = BIGINT },
+		</if>
+		
+	</set>
+	<where>
+			rid=#{rid}
+	</where>
+</update>
+
+<!--根据主键获取数据-->
+<select id="get" resultMap="URolePermission">
+	select <include refid="AllColumnlist"/> from u_role_permission
+	<where>
+		rid=#{0}
+	</where>
+</select>
+
+<!--根据多个ID获取数据-->
+<select id="getByIds" resultMap="URolePermission">
+	select <include refid="AllColumnlist"/> from u_role_permission
+	<where>
+		rid in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+
+<!-- 删除记录 -->
+<delete id="delete">
+	delete from u_role_permission
+	<where>
+		rid=#{0}
+	</where>
+</delete>
+
+
+
+<!-- 列表总数-->
+<select id="count" parameterType="Query"  resultType="Long">
+	select count(rid) from u_role_permission
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+</select>
+
+<!-- 分页列表-->
+<select id="pageList" parameterType="Query" resultMap="URolePermission">
+	select <include refid="AllColumnlist"/> from  u_role_permission
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+	<![CDATA[LIMIT #{rowIndex} , #{pageSize} ]]>
+</select>
+
+
+<!-- 直接使用表名查询HashMap列表 -->
+<select id="queryColumnList" parameterType="Query" resultType="java.util.HashMap">
+	select
+	<include refid="AllColumnlist" />
+	from u_role_permission
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+
+</select>
+
+
+</mapper>

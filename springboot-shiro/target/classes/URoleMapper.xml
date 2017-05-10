@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xm.shiro.admin.dao.URoleDao">
+
+<!-- URole resultMap映射  -->
+<resultMap type="com.xm.shiro.admin.entity.URole" id="URole">
+        <id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="type" property="type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+</resultMap>
+
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+ id,name,type
+</sql>
+
+<!-- 查询条件 -->
+<sql id="AllColumnWhere">
+	<if test="id!=null  ">
+	AND id=#{id}
+	</if>
+	<if test="name!=null  ">
+	AND name=#{name}
+	</if>
+	<if test="type!=null  ">
+	AND type=#{type}
+	</if>
+</sql>
+
+<!-- query 查询条件 -->
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.name!=null  and q.name !='' ">
+			AND name=#{q.name}
+		</if>
+		<if test="q.type!=null  and q.type !='' ">
+			AND type=#{q.type}
+		</if>
+	</if>
+</sql>
+
+
+<!-- 添加数据,默认列名第一个为主键 useGeneratedKeys="true" keyProperty="activityId"-->
+<insert id="add" parameterType="URole"  useGeneratedKeys="true" keyProperty="id">
+	insert into u_role (
+		<if test="id!=null ">
+		id,
+		</if>
+		<if test="name!=null  and name !='' ">
+		name,
+		</if>
+		<if test="type!=null  and type !='' ">
+		type
+		</if>
+	) values (
+		<if test="id!=null ">
+		#{id,jdbcType = BIGINT },
+		</if>
+		<if test="name!=null  and name !='' ">
+		#{name,jdbcType = VARCHAR },
+		</if>
+		<if test="type!=null  and type !='' ">
+		#{type,jdbcType = VARCHAR }
+		</if>
+	)
+</insert>
+
+
+<!--更新数据-->
+<update id="update" parameterType="URole">
+	update u_role 
+	<set>
+		
+		<if test="name!=null  and name !='' ">
+			name=#{name,jdbcType = VARCHAR },
+		</if>
+		
+		<if test="type!=null  and type !='' ">
+			type=#{type,jdbcType = VARCHAR },
+		</if>
+		
+	</set>
+	<where>
+			id=#{id}
+	</where>
+</update>
+
+<!--根据主键获取数据-->
+<select id="get" resultMap="URole">
+	select <include refid="AllColumnlist"/> from u_role
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<!--根据多个ID获取数据-->
+<select id="getByIds" resultMap="URole">
+	select <include refid="AllColumnlist"/> from u_role
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+
+<!-- 删除记录 -->
+<delete id="delete">
+	delete from u_role
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+
+
+<!-- 列表总数-->
+<select id="count" parameterType="Query"  resultType="Long">
+	select count(id) from u_role
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+</select>
+
+<!-- 分页列表-->
+<select id="pageList" parameterType="Query" resultMap="URole">
+	select <include refid="AllColumnlist"/> from  u_role
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+	<![CDATA[LIMIT #{rowIndex} , #{pageSize} ]]>
+</select>
+
+
+<!-- 直接使用表名查询HashMap列表 -->
+<select id="queryColumnList" parameterType="Query" resultType="java.util.HashMap">
+	select
+	<include refid="AllColumnlist" />
+	from u_role
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+
+</select>
+
+
+<!-- 获取用户角色-->
+<select id="findRoleByUid"   resultMap="URole">
+	SELECT role.id,role.name from u_user_role urole left join u_role role on urole.rid = role.id where urole.uid = #{0}
+</select>
+
+
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xm.shiro.admin.dao.UPermissionDao">
+
+<!-- UPermission resultMap映射  -->
+<resultMap type="com.xm.shiro.admin.entity.UPermission" id="UPermission">
+        <id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="url" property="url" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+</resultMap>
+
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+ id,url,name
+</sql>
+
+<!-- 查询条件 -->
+<sql id="AllColumnWhere">
+	<if test="id!=null  ">
+	AND id=#{id}
+	</if>
+	<if test="url!=null  ">
+	AND url=#{url}
+	</if>
+	<if test="name!=null  ">
+	AND name=#{name}
+	</if>
+</sql>
+
+<!-- query 查询条件 -->
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.id!=null ">
+			AND id=#{q.id}
+		</if>
+		<if test="q.url!=null  and q.url !='' ">
+			AND url=#{q.url}
+		</if>
+		<if test="q.name!=null  and q.name !='' ">
+			AND name=#{q.name}
+		</if>
+	</if>
+</sql>
+
+
+<!-- 添加数据,默认列名第一个为主键 useGeneratedKeys="true" keyProperty="activityId"-->
+<insert id="add" parameterType="UPermission"  useGeneratedKeys="true" keyProperty="id">
+	insert into u_permission (
+		<if test="id!=null ">
+		id,
+		</if>
+		<if test="url!=null  and url !='' ">
+		url,
+		</if>
+		<if test="name!=null  and name !='' ">
+		name
+		</if>
+	) values (
+		<if test="id!=null ">
+		#{id,jdbcType = BIGINT },
+		</if>
+		<if test="url!=null  and url !='' ">
+		#{url,jdbcType = VARCHAR },
+		</if>
+		<if test="name!=null  and name !='' ">
+		#{name,jdbcType = VARCHAR }
+		</if>
+	)
+</insert>
+
+
+<!--更新数据-->
+<update id="update" parameterType="UPermission">
+	update u_permission 
+	<set>
+		
+		<if test="url!=null  and url !='' ">
+			url=#{url,jdbcType = VARCHAR },
+		</if>
+		
+		<if test="name!=null  and name !='' ">
+			name=#{name,jdbcType = VARCHAR },
+		</if>
+		
+	</set>
+	<where>
+			id=#{id}
+	</where>
+</update>
+
+<!--根据主键获取数据-->
+<select id="get" resultMap="UPermission">
+	select <include refid="AllColumnlist"/> from u_permission
+	<where>
+		id=#{0}
+	</where>
+</select>
+
+<!--根据多个ID获取数据-->
+<select id="getByIds" resultMap="UPermission">
+	select <include refid="AllColumnlist"/> from u_permission
+	<where>
+		id in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+
+<!-- 删除记录 -->
+<delete id="delete">
+	delete from u_permission
+	<where>
+		id=#{0}
+	</where>
+</delete>
+
+
+
+<!-- 列表总数-->
+<select id="count" parameterType="Query"  resultType="Long">
+	select count(id) from u_permission
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+</select>
+
+<!-- 分页列表-->
+<select id="pageList" parameterType="Query" resultMap="UPermission">
+	select <include refid="AllColumnlist"/> from  u_permission
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+	<![CDATA[LIMIT #{rowIndex} , #{pageSize} ]]>
+</select>
+
+
+<!-- 直接使用表名查询HashMap列表 -->
+<select id="queryColumnList" parameterType="Query" resultType="java.util.HashMap">
+	select
+	<include refid="AllColumnlist" />
+	from u_permission
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+
+</select>
+
+
+
+<!-- 获取用户权限-->
+<select id="findPermissionByUid"   resultMap="UPermission">
+	SELECT p.* from u_user_role urole left join  u_role_permission rp   on urole.rid=rp.rid  left join  u_permission p on p.id = rp.pid  where urole.uid = #{0}
+</select>
+
+
+
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xm.shiro.admin.dao.UUserRoleDao">
+
+<!-- UUserRole resultMap映射  -->
+<resultMap type="com.xm.shiro.admin.entity.UUserRole" id="UUserRole">
+        <id column="uid" property="uid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <id column="rid" property="rid" javaType="java.lang.Long" jdbcType="BIGINT"/>
+</resultMap>
+
+
+
+<!-- 全部字段，一般用于明细查询 -->
+<sql id="AllColumnlist">
+ uid,rid
+</sql>
+
+<!-- 查询条件 -->
+<sql id="AllColumnWhere">
+	<if test="uid!=null  ">
+	AND uid=#{uid}
+	</if>
+	<if test="rid!=null  ">
+	AND rid=#{rid}
+	</if>
+</sql>
+
+<!-- query 查询条件 -->
+<sql id="listCommonWhere">
+	<if test="q!=null">
+		<if test="q.uid!=null ">
+			AND uid=#{q.uid}
+		</if>
+		<if test="q.rid!=null ">
+			AND rid=#{q.rid}
+		</if>
+	</if>
+</sql>
+
+
+<!-- 添加数据,默认列名第一个为主键 useGeneratedKeys="true" keyProperty="activityId"-->
+<insert id="add" parameterType="UUserRole"  useGeneratedKeys="true" keyProperty="uid">
+	insert into u_user_role (
+		<if test="uid!=null ">
+		uid,
+		</if>
+		<if test="rid!=null ">
+		rid
+		</if>
+	) values (
+		<if test="uid!=null ">
+		#{uid,jdbcType = BIGINT },
+		</if>
+		<if test="rid!=null ">
+		#{rid,jdbcType = BIGINT }
+		</if>
+	)
+</insert>
+
+
+<!--更新数据-->
+<update id="update" parameterType="UUserRole">
+	update u_user_role 
+	<set>
+		
+		<if test="rid!=null ">
+			rid=#{rid,jdbcType = BIGINT },
+		</if>
+		
+	</set>
+	<where>
+			uid=#{uid}
+	</where>
+</update>
+
+<!--根据主键获取数据-->
+<select id="get" resultMap="UUserRole">
+	select <include refid="AllColumnlist"/> from u_user_role
+	<where>
+		uid=#{0}
+	</where>
+</select>
+
+<!--根据多个ID获取数据-->
+<select id="getByIds" resultMap="UUserRole">
+	select <include refid="AllColumnlist"/> from u_user_role
+	<where>
+		uid in <foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+	</where>
+</select>
+
+
+<!-- 删除记录 -->
+<delete id="delete">
+	delete from u_user_role
+	<where>
+		uid=#{0}
+	</where>
+</delete>
+
+
+
+<!-- 列表总数-->
+<select id="count" parameterType="Query"  resultType="Long">
+	select count(uid) from u_user_role
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+</select>
+
+<!-- 分页列表-->
+<select id="pageList" parameterType="Query" resultMap="UUserRole">
+	select <include refid="AllColumnlist"/> from  u_user_role
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+	<![CDATA[LIMIT #{rowIndex} , #{pageSize} ]]>
+</select>
+
+
+<!-- 直接使用表名查询HashMap列表 -->
+<select id="queryColumnList" parameterType="Query" resultType="java.util.HashMap">
+	select
+	<include refid="AllColumnlist" />
+	from u_user_role
+	<where>
+		<include refid="listCommonWhere" />
+	</where>
+
+</select>
+
+
+</mapper>
