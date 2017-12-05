@@ -1,0 +1,5 @@
+spring:
+     data:
+        elasticsearch: #ElasticsearchProperties
+            cluster-name: elasticsearch #默认即为elasticsearch
+            cluster-nodes: 192.168.0.91:9300 #配置es节点信息，逗号分隔，如果没有指定，则启动ClientNode
