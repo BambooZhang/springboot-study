@@ -1,8 +1,8 @@
 # springboot-study
 
-springboot-Spring-data-elasticsearch整合
+spring-boot+springr-data-elasticsearch2.4.4整合
 
-版本：elasticsearch2.4.1，springboot1.5.1.RELEASE
+版本：elasticsearch2.4.4，springboot1.5.1.RELEASE
  
 
 ## 作者和他的blog
