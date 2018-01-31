@@ -33,9 +33,10 @@ public class Sender implements RabbitTemplate.ConfirmCallback {
     @Autowired
     public Sender(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
-        this.rabbitTemplate.setConfirmCallback(this);
+        this.rabbitTemplate.setConfirmCallback(this); //rabbitTemplate如果为单例的话，那回调就是最后设置的内容
     }
 
+    //如果是一个objct对象最好转成j'son字符串处理
     public void send(String msg) {
         CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
         LOGGER.info("send: " + correlationData.getId());
@@ -45,6 +46,11 @@ public class Sender implements RabbitTemplate.ConfirmCallback {
     /** 回调方法 */
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-        LOGGER.info("confirm: " + correlationData.getId());
+        LOGGER.info("回调id: " + correlationData.getId());
+        if (ack) {
+            LOGGER.info("生产者回调-消息成功消费");
+        } else {
+            LOGGER.info("生产者回调-消息消费失败:" + cause);
+        }
     }
 }

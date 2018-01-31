@@ -19,12 +19,15 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.support.AmqpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import com.rabbitmq.client.Channel;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 
 
@@ -44,52 +47,42 @@ public class Listener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
 
-    /** 设置交换机类型  */
+    /** 设置交换机类型
+     * DirectExchange:按照routingkey分发到指定队列
+     * TopicExchange:多关键字匹配
+     * FanoutExchange: 将消息分发到所有的绑定队列，无routingkey的概念
+     * HeadersExchange ：通过添加属性key-value匹配
+     */
     @Bean
     public DirectExchange defaultExchange() {
-        /**
-         * DirectExchange:按照routingkey分发到指定队列
-         * TopicExchange:多关键字匹配
-         * FanoutExchange: 将消息分发到所有的绑定队列，无routingkey的概念
-         * HeadersExchange ：通过添加属性key-value匹配
-         */
+
         return new DirectExchange(AmqpConfig.FOO_EXCHANGE);
     }
 
+    //队列持久
     @Bean
     public Queue fooQueue() {
-        return new Queue(AmqpConfig.FOO_QUEUE);
+        return new Queue(AmqpConfig.FOO_QUEUE, true); //队列持久
     }
 
+
+    //将队列绑定到交换机
     @Bean
     public Binding binding() {
-        /** 将队列绑定到交换机 */
+
         return BindingBuilder.bind(fooQueue()).to(defaultExchange()).with(AmqpConfig.FOO_ROUTINGKEY);
     }
 
+    //消息处理：如果要处理的是objct类型对象则字符串为json格式，自行转换为objcet
     @RabbitHandler
-    public void process(@Payload String foo) {
-        LOGGER.info("CallListener: " + foo);
+    public void process(@Payload String msg, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag, Channel channel) throws Exception{
+
+
+        LOGGER.info("处理并确认消息"+deliveryTag+" receiver message: " + msg);
+        //TODO 写自己的业务逻辑代码
+
+
     }
 
 
-/*    @Bean
-    public SimpleMessageListenerContainer messageContainer() {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(AmqpConfig().connectionFactory());
-        container.setQueues(fooQueue());
-        container.setExposeListenerChannel(true);
-        container.setMaxConcurrentConsumers(1);
-        container.setConcurrentConsumers(1);
-        container.setAcknowledgeMode(AcknowledgeMode.MANUAL); //设置确认模式手工确认
-        container.setMessageListener(new ChannelAwareMessageListener() {
-
-            @Override
-            public void onMessage(Message message, Channel channel) throws Exception {
-                byte[] body = message.getBody();
-                LOGGER.info("Listener onMessage : " + new String(body));
-                channel.basicAck(message.getMessageProperties().getDeliveryTag(), false); //确认消息成功消费
-            }
-        });
-        return container;
-    }*/
 }
