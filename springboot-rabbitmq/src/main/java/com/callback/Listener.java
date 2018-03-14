@@ -41,8 +41,8 @@ import org.springframework.messaging.handler.annotation.Payload;
  * @Created bamboo  zjcjava@163.com
  * @Date 2018-01-03 20:48
  */
-@Configuration
-@RabbitListener(queues = AmqpConfig.FOO_QUEUE)
+//@Configuration
+//@RabbitListener(queues = AmqpConfig.FOO_QUEUE)
 public class Listener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
