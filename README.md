@@ -1,20 +1,19 @@
 # springboot-study
 springboot study  project
 
-spring boot Êµ¼ùÑ§Ï°°¸Àı£¬ÊÇ±ßÑ§Ï°±ßÓÃÓÚÊµ¼ÊÏîÄ¿ÖĞµÄ¼ûÖ¤
+spring boot å®è·µå­¦ä¹ æ¡ˆä¾‹ï¼Œæ˜¯è¾¹å­¦ä¹ è¾¹ç”¨äºå®é™…é¡¹ç›®ä¸­çš„è§è¯
 
-## ×÷ÕßºÍËûµÄblog
-Ô´ÂëµØÖ·£ºÎÒµÄ[GitHubµØÖ·](https://github.com/BambooZhang "GitHub")<br>
-×÷Õß£º[Bamboo](http://blog.csdn.net/zjcjava "Bamboo")<br>
+## ä½œè€…å’Œä»–çš„blog
+æºç åœ°å€ï¼šæˆ‘çš„[GitHubåœ°å€](https://github.com/BambooZhang "GitHub")<br>
+ä½œè€…ï¼š[Bamboo](http://blog.csdn.net/zjcjava "Bamboo")<br>
 
-ÍÆ¼öÈºÄàÍß½³BYSokcetµÄQQ Èº<br>
-±à³ÌÖ®ÃÀ¢Ù 365234583  <br>
-±à³ÌÖ®ÃÀ¢Ú 290714704  <br><br>
+æ¬¢è¿åŠ å…¥Javaé«˜çº§ç¾¤çš„QQ ç¾¤<br>
+ç¾¤èŠå·ç ï¼š435095913<br>
+
+<br>
 
 
-## ÎÒµÄ¸öÈË¶©ÔÄºÅºÍÍÆ¼ö
-¹Ø×¢Î¢ĞÅ¹«ÖÚºÅ¡¾ÎÒµÄ¸öÈË¶©ÔÄºÅ¡¿<br>
-![ÎÒµÄ¸öÈË¶©ÔÄºÅ](http://img.blog.csdn.net/20170928183434735?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvempjamF2YQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+## æˆ‘çš„ä¸ªäººè®¢é˜…å·å’Œæ¨è
+å…³æ³¨å¾®ä¿¡å…¬ä¼—å·ã€æˆ‘çš„ä¸ªäººè®¢é˜…å·ã€‘<br>
+![æˆ‘çš„ä¸ªäººè®¢é˜…å·](./20170928183434735.jpg)
 
-¹Ø×¢´óÉñÎ¢ĞÅ¹«ÖÚºÅ¡¾ÄàÍß½³BYSokcet¡¿£¬¼°Ê±µÃµ½¼¼ÊõÎÄÕÂÍÆËÍ<br>
-![ÄàÍß½³BYSokcet¹«ÖÚºÅ](http://www.bysocket.com/wp-content/uploads/2017/01/qrcode_for_gh_cd421e7eb7d6_430.jpg)
