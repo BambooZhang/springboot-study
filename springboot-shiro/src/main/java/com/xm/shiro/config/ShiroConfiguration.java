@@ -1,6 +1,5 @@
 package com.xm.shiro.config;
 
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -72,7 +71,7 @@ public class ShiroConfiguration {
 //        filters.put("logout", logoutFilter);
 //        shiroFilterFactoryBean.setFilters(filters);
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        Map<String, String> filterChainDefinitionManager = new LinkedHashMap<>();
+        Map<String, String> filterChainDefinitionManager = new LinkedHashMap();
         filterChainDefinitionManager.put("/logout", "logout");
         filterChainDefinitionManager.put("/user/**", "authc,roles[user]");
         filterChainDefinitionManager.put("/shop/**", "authc,roles[shop]");

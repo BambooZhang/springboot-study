@@ -1,13 +1,12 @@
 package com.xm.shiro.config;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import com.xm.shiro.admin.dao.UPermissionDao;
+import com.xm.shiro.admin.dao.URoleDao;
+import com.xm.shiro.admin.dao.UUserDao;
+import com.xm.shiro.admin.entity.UPermission;
+import com.xm.shiro.admin.entity.URole;
+import com.xm.shiro.admin.entity.UUser;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -16,12 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xm.shiro.admin.dao.UPermissionDao;
-import com.xm.shiro.admin.dao.URoleDao;
-import com.xm.shiro.admin.dao.UUserDao;
-import com.xm.shiro.admin.entity.UPermission;
-import com.xm.shiro.admin.entity.URole;
-import com.xm.shiro.admin.entity.UUser;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

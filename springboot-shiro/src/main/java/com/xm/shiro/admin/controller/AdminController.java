@@ -1,29 +1,14 @@
 package com.xm.shiro.admin.controller;
 
 
-
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
+import com.xm.shiro.admin.dao.URoleDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.xm.shiro.admin.dao.URoleDao;
-import com.xm.shiro.admin.entity.UUser;
 
 
 
@@ -51,13 +36,13 @@ public class AdminController {
     
     
     @RequestMapping("/")
-    public String index(Model model) {
+    public Object index(Model model) {
         System.out.println("this is frame");
-        return "common/frame";
+        return uRoleDao.get(1l);
     }
 
 
-    @RequestMapping("/index")
+    /*@RequestMapping("/index")
     public String list(Model model) {
         System.out.println("this is index");
         return "index";
@@ -96,12 +81,12 @@ public class AdminController {
     }
     
     
-    /**
+    *//**
      * ajax登录请求接口方式登陆
      * @param username
      * @param password
      * @return
-     */
+     *//*
     @RequestMapping(value="/ajaxLogin",method=RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> submitLogin(String username, String password,Model model) {
@@ -118,7 +103,7 @@ public class AdminController {
             resultMap.put("message", e.getMessage());
         }
         return resultMap;
-    }
+    }*/
     
 
 

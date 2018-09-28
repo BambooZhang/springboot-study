@@ -74,7 +74,7 @@
 
 
 <!-- 添加数据,默认列名第一个为主键 useGeneratedKeys="true" keyProperty="activityId"-->
-<insert id="add" parameterType="UUser"  useGeneratedKeys="true" keyProperty="id">
+<insert id="add" parameterType="com.xm.shiro.admin.entity.UUser"  useGeneratedKeys="true" keyProperty="id">
 	insert into u_user (
 		<if test="id!=null ">
 		id,
@@ -124,7 +124,7 @@
 
 
 <!--更新数据-->
-<update id="update" parameterType="UUser">
+<update id="update" parameterType="com.xm.shiro.admin.entity.UUser">
 	update u_user 
 	<set>
 		
@@ -187,7 +187,7 @@
 
 
 <!-- 列表总数-->
-<select id="count" parameterType="Query"  resultType="Long">
+<select id="count" parameterType="com.xm.shiro.admin.entity.Query"  resultType="Long">
 	select count(id) from u_user
 	<where>
 		<include refid="listCommonWhere" />
@@ -195,7 +195,7 @@
 </select>
 
 <!-- 分页列表-->
-<select id="pageList" parameterType="Query" resultMap="UUser">
+<select id="pageList" parameterType="com.xm.shiro.admin.entity.Query" resultMap="UUser">
 	select <include refid="AllColumnlist"/> from  u_user
 	<where>
 		<include refid="listCommonWhere" />
@@ -205,7 +205,7 @@
 
 
 <!-- 直接使用表名查询HashMap列表 -->
-<select id="queryColumnList" parameterType="Query" resultType="java.util.HashMap">
+<select id="queryColumnList" parameterType="com.xm.shiro.admin.entity.Query" resultType="java.util.HashMap">
 	select
 	<include refid="AllColumnlist" />
 	from u_user

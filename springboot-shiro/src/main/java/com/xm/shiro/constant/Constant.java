@@ -1,12 +1,6 @@
 package com.xm.shiro.constant;
 
-import java.util.Date;
 
-/**
- * 开发框架基础架构的公共常量设置类（行知网络使用此基础框架的项目均可使用此常量类）
- * @author xieyong
- *
- */
 public class Constant {
 	
 	/**失败标识-文字*/

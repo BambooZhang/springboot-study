@@ -39,7 +39,7 @@
 
 
 <!-- 添加数据,默认列名第一个为主键 useGeneratedKeys="true" keyProperty="activityId"-->
-<insert id="add" parameterType="UUserRole"  useGeneratedKeys="true" keyProperty="uid">
+<insert id="add" parameterType="com.xm.shiro.admin.entity.UUserRole"  useGeneratedKeys="true" keyProperty="uid">
 	insert into u_user_role (
 		<if test="uid!=null ">
 		uid,
@@ -59,7 +59,7 @@
 
 
 <!--更新数据-->
-<update id="update" parameterType="UUserRole">
+<update id="update" parameterType="com.xm.shiro.admin.entity.UUserRole">
 	update u_user_role 
 	<set>
 		
@@ -101,7 +101,7 @@
 
 
 <!-- 列表总数-->
-<select id="count" parameterType="Query"  resultType="Long">
+<select id="count" parameterType="com.xm.shiro.admin.entity.Query"  resultType="Long">
 	select count(uid) from u_user_role
 	<where>
 		<include refid="listCommonWhere" />
@@ -109,7 +109,7 @@
 </select>
 
 <!-- 分页列表-->
-<select id="pageList" parameterType="Query" resultMap="UUserRole">
+<select id="pageList" parameterType="com.xm.shiro.admin.entity.Query" resultMap="UUserRole">
 	select <include refid="AllColumnlist"/> from  u_user_role
 	<where>
 		<include refid="listCommonWhere" />
@@ -119,7 +119,7 @@
 
 
 <!-- 直接使用表名查询HashMap列表 -->
-<select id="queryColumnList" parameterType="Query" resultType="java.util.HashMap">
+<select id="queryColumnList" parameterType="com.xm.shiro.admin.entity.Query" resultType="java.util.HashMap">
 	select
 	<include refid="AllColumnlist" />
 	from u_user_role
