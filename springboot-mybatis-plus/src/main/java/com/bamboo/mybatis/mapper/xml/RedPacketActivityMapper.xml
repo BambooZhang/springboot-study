@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bamboo.mybatis.mapper.RedPacketActivityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bamboo.mybatis.entity.RedPacketActivity">
+        <id column="id" property="id" />
+        <result column="act_name" property="actName" />
+        <result column="status" property="status" />
+        <result column="detail" property="detail" />
+        <result column="plan_release_yxt" property="planReleaseYxt" />
+        <result column="release_yxt" property="releaseYxt" />
+        <result column="plan_booster_yxt" property="planBoosterYxt" />
+        <result column="booster_yxt" property="boosterYxt" />
+        <result column="begin_time" property="beginTime" />
+        <result column="end_time" property="endTime" />
+        <result column="utime" property="utime" />
+        <result column="ctime" property="ctime" />
+    </resultMap>
+
+</mapper>
