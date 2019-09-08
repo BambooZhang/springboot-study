@@ -11,6 +11,7 @@ spring boot 实践学习案例，是边学习边用于实际项目中的见证
 - [springboot-Spring-data-elasticsearch]  es集成
 - springboot-mybatis-plus 代码自动生成mybatis
 - springboot-nacos  阿里nacos配置中心的使用
+- springboot-jpa  jpa集成使用
 
 
 
